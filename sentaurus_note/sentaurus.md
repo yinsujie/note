@@ -80,8 +80,6 @@
 (define dx (* fs (/ (+ Wleft Wgate Wright) 10.0)))
 (define dy (* fs (/ ymax 10.0)))
 (define dTox (* fs (/ Tox_sidewall 3.0) ))
-
-#endif
 ```
 #### 9、修改部分区域内材料性质
 ```tcl
