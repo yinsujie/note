@@ -333,3 +333,65 @@ set max [lindex [calculate_field_value -plot plot_BV1200V -geom plot_BV1200V_tdr
 
 puts "DOE: MAX [format %.2e $max]" 
 ```
+
+
+#### 23、批量提取图片
+```tcl
+set i 0
+
+foreach file $FileList {
+	
+	#load file
+	load_file "$file" -name dataset_tdr_$i
+	create_plot -dataset dataset_tdr_$i -name plot_tdr_$i
+	select_plots "{plot_tdr_$i}" 
+
+	set_plot_prop -plot "{plot_tdr_$i}" -not_axes_interchanged
+	set_material_prop {DepletionRegion} -plot "{plot_tdr_$i}" -geom dataset_tdr_$i -off
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i TotalCurrentDensity -show_bands
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i TotalCurrentDensity -min 0.1 -min_fixed
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i TotalCurrentDensity -max 20000 -max_fixed
+
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.8 0.750604} -size {0.230597 0.550604}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.75 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0}
+	zoom_plot -plot "{plot_tdr_$i}" -reset	
+	
+	export_view ./exported_data/UIS/conc@conc@/current_density-conc@conc@/CurrentDensity-conc@conc@-$i.png -plots "{plot_tdr_$i}" -format png -resolution 2906x828
+	
+	
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  ElectricField -show_bands
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  ElectricField -min 0 -min_fixed
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  ElectricField -max 200000 -max_fixed
+
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.8 0.750604} -size {0.230597 0.550604}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.75 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0}
+	zoom_plot -plot "{plot_tdr_$i}" -reset	
+	
+	export_view ./exported_data/UIS/conc@conc@/ElectricField-conc@conc@/ElectricField-conc@conc@-$i.png -plots "{plot_tdr_$i}" -format png -resolution 2906x828
+	
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  LatticeTemperature -show_bands
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  LatticeTemperature -min 300 -min_fixed
+	set_field_prop -plot "{plot_tdr_$i}" -geom dataset_tdr_$i  LatticeTemperature -max 360 -max_fixed
+
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.8 0.750604} -size {0.230597 0.550604}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0.75 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0.751}
+	set_legend_prop -plot "{plot_tdr_$i}" -position {0 0}
+	zoom_plot -plot "{plot_tdr_$i}" -reset	
+	
+	export_view ./exported_data/UIS/conc@conc@/LatticeTemperature-conc@conc@/LatticeTemperature-conc@conc@-$i.png -plots "{plot_tdr_$i}" -format png -resolution 2906x828
+	
+	
+	#unload file
+	remove_plots "{plot_tdr_$i}" 
+	remove_datasets dataset_tdr_$i
+	# next i
+	puts "done! $i"
+	incr i
+	
+}
+```
