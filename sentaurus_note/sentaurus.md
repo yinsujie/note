@@ -36,8 +36,6 @@
 (define TAN (tan (* (/ gate_angle 180) PI) ))
 (define COS (cos (* (/ gate_angle 180) PI) ))
 (define SIN (sin (* (/ gate_angle 180) PI) ))
-
-#endif
 ```
 #### 6、倒角定义
 ```tcl
@@ -46,7 +44,6 @@
 	(car (find-vertex-id (position (+ Wleft (/ Hgate TAN)) Hgate 0)))
 	) R)
 
-#endif
 ```
 #### 7、返回创建区域的编号，将两个区域合成一个，移动点的位置
 ```tcl
@@ -72,7 +69,6 @@
 		(gvector Wneck 0.0 0.0 ) ;direction length
 	)
 
-#endif
 ```
 #### 8、定义大致网格范围
 ```tcl
@@ -320,4 +316,20 @@ Plot(FilePrefix= “xxxxx”  when ( contact= “drain” Voltage=10 ) NoOverwri
 #### 22、利用sort排序
 ```tcl
 对all进行操作
+```
+#### 23、提取QG
+```tcl
+set Q1 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 776] 
+set Q2 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 2] 
+puts "DOE: Qgd [format %.1f [expr ($Q2-$Q1) ]]" 
+
+```
+#### 23、提取某一材料/区域中的最大场强
+```tcl
+load_file ./n@node|BV1200V@_des.tdr -name plot_BV1200V_tdr
+create_plot -dataset plot_BV1200V_tdr -name plot_BV1200V
+select_plots {plot_BV1200V}
+set max [lindex [calculate_field_value -plot plot_BV1200V -geom plot_BV1200V_tdr -field ElectricField -max -ranges {0 3.1 0 11.7 0 0} -materials {Oxide}] 0]
+
+puts "DOE: MAX [format %.2e $max]" 
 ```
