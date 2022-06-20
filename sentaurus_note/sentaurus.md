@@ -1,21 +1,16 @@
-# 标题1
-## 标题2
-### 标题3
-<<<<<<< HEAD
-#### 标题4
-##### 标题5
-###### 标题6
+#### 1、sde或sdevice中判断语句 tdl command
 
-- 无序列表1
-- 无序列表2
-- 无序列表3
-
-> 引用1
-> 
-> 引用2
-
-测试修改行
-
-发士大夫士大夫
-=======
->>>>>>> 60f1dc799fccdc3127b1c66d4c458f960fc78c70
+```tcl
+#if [string equal "@break@" "current"]
+	BreakCriteria{Current (Contact="drain" absval=1e-8)}
+	#else
+	BreakAtIonIntegral
+        ComputeIonizationIntegrals(WriteAll)
+#endif
+```
+#### 2、多行注释
+```tcl
+#if 0
+注释内容
+#endif
+```
