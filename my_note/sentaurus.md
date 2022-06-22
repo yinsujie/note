@@ -317,7 +317,7 @@ Plot(FilePrefix= “xxxxx”  when ( contact= “drain” Voltage=10 ) NoOverwri
 ```tcl
 对all进行操作
 ```
-## 23、提取QG
+## 23、提取QG（读取栅电荷）
 ```tcl
 set Q1 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 776] 
 set Q2 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 2] 
