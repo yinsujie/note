@@ -1,4 +1,4 @@
-#### 1、sde或sdevice中判断语句 tcl command
+## 1、sde或sdevice中判断语句 tcl command
 
 ```tcl
 #if [string equal "@break@" "current"]
@@ -8,13 +8,13 @@
         ComputeIonizationIntegrals(WriteAll)
 #endif
 ```
-#### 2、多行注释
+## 2、多行注释
 ```tcl
 #if 0
 注释内容
 #endif
 ```
-#### 3、sde或sdevice中判断语句 scheme command
+## 3、sde或sdevice中判断语句 scheme command
 ```tcl
 (if   (string=?  “@type@”  “NMOS”)|
 	(begin
@@ -25,19 +25,19 @@
 			)
 )
 ```
-#### 4、分区，维持网格一致
+## 4、分区，维持网格一致
 ```tcl
 (sdesnmesh:axisaligned “xCuts” (list  (/  Lgate  -2) (/  Lgate  -2))
 (sdesnmesh:axisaligned “yCuts” (list  0 1)
 #endif
 ```
-#### 5、三角函数
+## 5、三角函数
 ```tcl
 (define TAN (tan (* (/ gate_angle 180) PI) ))
 (define COS (cos (* (/ gate_angle 180) PI) ))
 (define SIN (sin (* (/ gate_angle 180) PI) ))
 ```
-#### 6、倒角定义
+## 6、倒角定义
 ```tcl
 (sdegeo:fillet-2d (list 
 	(car (find-vertex-id (position (- (+ Wleft Wgate) (/ Hgate TAN)) Hgate 0)))
@@ -45,7 +45,7 @@
 	) R)
 
 ```
-#### 7、返回创建区域的编号，将两个区域合成一个，移动点的位置
+## 7、返回创建区域的编号，将两个区域合成一个，移动点的位置
 ```tcl
 (define LOCOS1_ID (sdegeo:create-rectangle
 		(position 0.0 0.0 0.0 )  (position Wleft Tox_locos 0.0 ) "Oxide"  "R.LOCOS_thin" ) 
@@ -70,14 +70,14 @@
 	)
 
 ```
-#### 8、定义大致网格范围
+## 8、定义大致网格范围
 ```tcl
 (define fs 1.0)
 (define dx (* fs (/ (+ Wleft Wgate Wright) 10.0)))
 (define dy (* fs (/ ymax 10.0)))
 (define dTox (* fs (/ Tox_sidewall 3.0) ))
 ```
-#### 9、修改部分区域内材料性质
+## 9、修改部分区域内材料性质
 ```tcl
   Region = "xx"
   {  Epsilon
@@ -92,7 +92,7 @@
 
 #endif
 ```
-#### 10、sde和sdevice中的if语句
+## 10、sde和sdevice中的if语句
 ```tcl
 #if [string equal "@type@" "pshield"]
 
@@ -104,7 +104,7 @@
 
 #endif
 ```
-#### 11、Svisual
+## 11、Svisual
 ```tcl
 #setdep  @previous@
 建立依赖，前面不运行，svisual就不运行
@@ -159,11 +159,11 @@ export_view ./exported_data/IdVg/n@node@_@type@_Lgate@Lgate@_Tox@Tox@.png -plots
 存贮png文件
 
 ```
-#### 12、区域之间的界面电荷
+## 12、区域之间的界面电荷
 ```tcl
 RegionInterface = "Region1/Region0" { Insert = "Oxide%Silicon.par" }
 ```
-#### 13、关于击穿电压收敛性问题
+## 13、关于击穿电压收敛性问题
 ```tcl
 Math {
 	ElementVolumeAvalanche   用截断体积，计算雪崩产生的贡献
@@ -178,7 +178,7 @@ Avalanche(Hatakeyama)考虑热模型对器件击穿的影响。
 参考误差，误差约小，收敛性越好，时间越长
 
 ```
-#### 14、offset网格设置
+## 14、offset网格设置
 ```tcl
 (define nlevels 10)	#设置几层曲线
 (define factor 1.5)	#曲面增长速率
@@ -191,9 +191,9 @@ Avalanche(Hatakeyama)考虑热模型对器件击穿的影响。
 (sdedr:offset-interface "material" "Oxide" "SiliconCarbide"  "hlocal" 0.001 "factor" factor)
 
 ```
-#### 15、电极定义中Resist的值会除AF
+## 15、电极定义中Resist的值会除AF
 
-#### 16、读取电容值的svisual代码：
+## 16、读取电容值的svisual代码：
 ```tcl
 ###Cgs
 create_curve -name Cgs($N) -plot Plot_C -dataset PLT_C($N) \
@@ -240,7 +240,7 @@ remove_curves -plot Plot_C Coss($N)
 
 
 ```
-#### 17、sdevice中电源的使用方法
+## 17、sdevice中电源的使用方法
 ```tcl
 # power supply                  V+ V-   #instance parameter 
 Vsource_pset Vdd 	(dd 0) 	{   dc = 0.0    } #instance parameter 
@@ -251,7 +251,7 @@ Vsource_pset Vin 	(in 0) 	{ pulse= (   0     2.0  @<2*time_ps>@  @<0.2*time_ps>@
 #equal to : [expr 0.2*$time_ps]    }
 
 ```
-#### 18、Math中设置导出错误
+## 18、Math中设置导出错误
 ```tcl
 CNormPrint
 NewtonPlot(
@@ -260,7 +260,7 @@ Residual
 )
 
 ```
-#### 19、导出多张图 
+## 19、导出多张图 
 ```tcl
 # step 1 get the file list 
 #得到一个升序排列的文件列表
@@ -302,29 +302,29 @@ incr i
 \
 
 ```
-#### 20、LINUX系统设置快捷方式
+## 20、LINUX系统设置快捷方式
 ```tcl
 Pwd；获取文件路径
 Ln -s 原路径 新路径（桌面路径） 
 ```
-#### 21、输出某一电压下的图片
+## 21、输出某一电压下的图片
 ```tcl
 Plot(FilePrefix= “xxxxx”  when ( contact= “drain” Voltage=10 ) NoOverwrite)
 输出在drain电极为10V时的电压图片。
 
 ```
-#### 22、利用sort排序
+## 22、利用sort排序
 ```tcl
 对all进行操作
 ```
-#### 23、提取QG
+## 23、提取QG
 ```tcl
 set Q1 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 776] 
 set Q2 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 2] 
 puts "DOE: Qgd [format %.1f [expr ($Q2-$Q1) ]]" 
 
 ```
-#### 23、提取某一材料/区域中的最大场强
+## 24、提取某一材料/区域中的最大场强
 ```tcl
 load_file ./n@node|BV1200V@_des.tdr -name plot_BV1200V_tdr
 create_plot -dataset plot_BV1200V_tdr -name plot_BV1200V
@@ -335,7 +335,7 @@ puts "DOE: MAX [format %.2e $max]"
 ```
 
 
-#### 23、批量提取图片
+## 25、批量提取图片
 ```tcl
 set i 0
 
