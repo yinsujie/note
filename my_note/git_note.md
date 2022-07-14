@@ -30,9 +30,21 @@ rm -rf / 切勿在Linux中尝试！删除电脑中全部文件！
 ```
 
 
+### 常用命令
+
+查看配置 git config -l
+
+查看不同级别的配置文件：
+```C++{.line-numbers}
 
 
+#查看系统config
+git config --system --list
+　　
+#查看当前用户（global）配置
+git config --global  --list
 
+```
 
 
 
