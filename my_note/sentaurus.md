@@ -395,3 +395,9 @@ foreach file $FileList {
 	
 }
 ```
+
+## 26、sde中坐标旋转
+```tcl
+(sde:clear)
+(sde:set-process-up-direction "+z") 
+```
