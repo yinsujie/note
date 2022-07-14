@@ -38,6 +38,8 @@
 ![图片名称](/sentaurus_note/assets/23443.png)  
 *图片caption*
 
+![图片名称](/my_note/图片/111.png)  
+*图片caption*
 
 $$
 \lim_{x \to 0}\frac{sin(t)}{x}=1
