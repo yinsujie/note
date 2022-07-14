@@ -1,6 +1,6 @@
-## 1、sde或sdevice中判断语句 tcl command
+## 1、sde或sdevice中判断语句 scheme command
 
-```tcl
+```scheme{.line-numbers}
 #if [string equal "@break@" "current"]
 	BreakCriteria{Current (Contact="drain" absval=1e-8)}
 	#else
@@ -9,13 +9,13 @@
 #endif
 ```
 ## 2、多行注释
-```tcl
+```scheme{.line-numbers}
 #if 0
 注释内容
 #endif
 ```
 ## 3、sde或sdevice中判断语句 scheme command
-```tcl
+```scheme{.line-numbers}
 (if   (string=?  “@type@”  “NMOS”)|
 	(begin
 			如果相等执行
@@ -26,19 +26,19 @@
 )
 ```
 ## 4、分区，维持网格一致
-```tcl
+```scheme{.line-numbers}
 (sdesnmesh:axisaligned “xCuts” (list  (/  Lgate  -2) (/  Lgate  -2))
 (sdesnmesh:axisaligned “yCuts” (list  0 1)
 #endif
 ```
 ## 5、三角函数
-```tcl
+```scheme{.line-numbers}
 (define TAN (tan (* (/ gate_angle 180) PI) ))
 (define COS (cos (* (/ gate_angle 180) PI) ))
 (define SIN (sin (* (/ gate_angle 180) PI) ))
 ```
 ## 6、倒角定义
-```tcl
+```scheme{.line-numbers}
 (sdegeo:fillet-2d (list 
 	(car (find-vertex-id (position (- (+ Wleft Wgate) (/ Hgate TAN)) Hgate 0)))
 	(car (find-vertex-id (position (+ Wleft (/ Hgate TAN)) Hgate 0)))
@@ -46,7 +46,7 @@
 
 ```
 ## 7、返回创建区域的编号，将两个区域合成一个，移动点的位置
-```tcl
+```scheme{.line-numbers}
 (define LOCOS1_ID (sdegeo:create-rectangle
 		(position 0.0 0.0 0.0 )  (position Wleft Tox_locos 0.0 ) "Oxide"  "R.LOCOS_thin" ) 
 )
@@ -71,14 +71,14 @@
 
 ```
 ## 8、定义大致网格范围
-```tcl
+```scheme{.line-numbers}
 (define fs 1.0)
 (define dx (* fs (/ (+ Wleft Wgate Wright) 10.0)))
 (define dy (* fs (/ ymax 10.0)))
 (define dTox (* fs (/ Tox_sidewall 3.0) ))
 ```
 ## 9、修改部分区域内材料性质
-```tcl
+```scheme{.line-numbers}
   Region = "xx"
   {  Epsilon
 			{
@@ -93,7 +93,7 @@
 #endif
 ```
 ## 10、sde和sdevice中的if语句
-```tcl
+```scheme{.line-numbers}
 #if [string equal "@type@" "pshield"]
 
 #elif [string equal "@type@" "thick_pshield"]
@@ -105,7 +105,7 @@
 #endif
 ```
 ## 11、Svisual
-```tcl
+```scheme{.line-numbers}
 #setdep  @previous@
 建立依赖，前面不运行，svisual就不运行
 
@@ -160,11 +160,11 @@ export_view ./exported_data/IdVg/n@node@_@type@_Lgate@Lgate@_Tox@Tox@.png -plots
 
 ```
 ## 12、区域之间的界面电荷
-```tcl
+```scheme{.line-numbers}
 RegionInterface = "Region1/Region0" { Insert = "Oxide%Silicon.par" }
 ```
 ## 13、关于击穿电压收敛性问题
-```tcl
+```scheme{.line-numbers}
 Math {
 	ElementVolumeAvalanche   用截断体积，计算雪崩产生的贡献
 	AvalFlatElementExclusion= 1.5   忽略掉一些过于扁平的单元
@@ -179,7 +179,7 @@ Avalanche(Hatakeyama)考虑热模型对器件击穿的影响。
 
 ```
 ## 14、offset网格设置
-```tcl
+```scheme{.line-numbers}
 (define nlevels 10)	#设置几层曲线
 (define factor 1.5)	#曲面增长速率
 
@@ -194,7 +194,7 @@ Avalanche(Hatakeyama)考虑热模型对器件击穿的影响。
 ## 15、电极定义中Resist的值会除AF
 
 ## 16、读取电容值的svisual代码：
-```tcl
+```scheme{.line-numbers}
 ###Cgs
 create_curve -name Cgs($N) -plot Plot_C -dataset PLT_C($N) \
 	-axisX v(D) -axisY c(G,S)
@@ -241,7 +241,7 @@ remove_curves -plot Plot_C Coss($N)
 
 ```
 ## 17、sdevice中电源的使用方法
-```tcl
+```scheme{.line-numbers}
 # power supply                  V+ V-   #instance parameter 
 Vsource_pset Vdd 	(dd 0) 	{   dc = 0.0    } #instance parameter 
 Vsource_pset Vss 	(ss 0) 	{   dc = 0.0      } #instance parameter 
@@ -252,7 +252,7 @@ Vsource_pset Vin 	(in 0) 	{ pulse= (   0     2.0  @<2*time_ps>@  @<0.2*time_ps>@
 
 ```
 ## 18、Math中设置导出错误
-```tcl
+```scheme{.line-numbers}
 CNormPrint
 NewtonPlot(
 Error MinError
@@ -261,7 +261,7 @@ Residual
 
 ```
 ## 19、导出多张图 
-```tcl
+```scheme{.line-numbers}
 # step 1 get the file list 
 #得到一个升序排列的文件列表
 set FileList [lsort -ascii -increasing [glob -type f profile_n@node|UIS@_*_IGBT_des.tdr]]
@@ -303,29 +303,29 @@ incr i
 
 ```
 ## 20、LINUX系统设置快捷方式
-```tcl
+```scheme{.line-numbers}
 Pwd；获取文件路径
 Ln -s 原路径 新路径（桌面路径） 
 ```
 ## 21、输出某一电压下的图片
-```tcl
+```scheme{.line-numbers}
 Plot(FilePrefix= “xxxxx”  when ( contact= “drain” Voltage=10 ) NoOverwrite)
 输出在drain电极为10V时的电压图片。
 
 ```
 ## 22、利用sort排序
-```tcl
+```scheme{.line-numbers}
 对all进行操作
 ```
 ## 23、提取QG（读取栅电荷）
-```tcl
+```scheme{.line-numbers}
 set Q1 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 776] 
 set Q2 [probe_curve curve_drain_n@node@ -plot plot_QG -valueY 2] 
 puts "DOE: Qgd [format %.1f [expr ($Q2-$Q1) ]]" 
 
 ```
 ## 24、提取某一材料/区域中的最大场强
-```tcl
+```scheme{.line-numbers}
 load_file ./n@node|BV1200V@_des.tdr -name plot_BV1200V_tdr
 create_plot -dataset plot_BV1200V_tdr -name plot_BV1200V
 select_plots {plot_BV1200V}
@@ -336,7 +336,7 @@ puts "DOE: MAX [format %.2e $max]"
 
 
 ## 25、批量提取图片
-```tcl
+```scheme{.line-numbers}
 set i 0
 
 foreach file $FileList {
@@ -397,7 +397,7 @@ foreach file $FileList {
 ```
 
 ## 26、sde中坐标旋转
-```tcl
+```scheme{.line-numbers}{.line-numbers}
 (sde:clear)
 (sde:set-process-up-direction "+z") 
 ```
