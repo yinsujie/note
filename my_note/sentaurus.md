@@ -157,7 +157,6 @@ export_curves {curve_IdVg_n@node@ curve_Gm_n@node@ } -plot plot_IdVg -filename .
 # export curve plot to png file
 export_view ./exported_data/IdVg/n@node@_@type@_Lgate@Lgate@_Tox@Tox@.png -plots {plot_IdVg} -format png -overwrite
 存贮png文件
-
 ```
 ## 12、区域之间的界面电荷
 ```scheme{.line-numbers}
